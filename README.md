@@ -6,7 +6,7 @@ A WiFi-enabled web interface for controlling GPIO pins on the ESP32-S3-MINI-1 de
 
 - WiFi connectivity with automatic connection
 - Web-based control panel accessible from any browser
-- Toggle GPIO pins IO14 and IO33
+- Toggle GPIO pins IO15 and IO33
 - Real-time status updates
 - Responsive design for mobile and desktop
 - JSON API for programmatic control
@@ -20,7 +20,7 @@ A WiFi-enabled web interface for controlling GPIO pins on the ESP32-S3-MINI-1 de
 ## GPIO Pins
 
 This project controls the following GPIO pins:
-- **GPIO 14**: General purpose I/O pin
+- **GPIO 15**: General purpose I/O pin
 - **GPIO 33**: General purpose I/O pin
 
 You can connect LEDs, relays, or other devices to these pins for control.
@@ -106,15 +106,15 @@ You can connect LEDs, relays, or other devices to these pins for control.
 
 4. **Control GPIO pins**
 
-   Use the ON/OFF buttons to toggle GPIO 14 and GPIO 33.
+   Use the ON/OFF buttons to toggle GPIO 15 and GPIO 33.
 
 ## API Endpoints
 
 The web server provides the following endpoints:
 
 - `GET /` - Main control panel (HTML)
-- `GET /gpio?pin=14&state=1` - Set GPIO 14 to HIGH
-- `GET /gpio?pin=14&state=0` - Set GPIO 14 to LOW
+- `GET /gpio?pin=15&state=1` - Set GPIO 15 to HIGH
+- `GET /gpio?pin=15&state=0` - Set GPIO 15 to LOW
 - `GET /gpio?pin=33&state=1` - Set GPIO 33 to HIGH
 - `GET /gpio?pin=33&state=0` - Set GPIO 33 to LOW
 - `GET /status` - Get current status of all GPIOs (JSON)
@@ -123,8 +123,8 @@ The web server provides the following endpoints:
 ### Example API Usage
 
 ```bash
-# Turn ON GPIO 14
-curl "http://192.168.1.XXX/gpio?pin=14&state=1"
+# Turn ON GPIO 15
+curl "http://192.168.1.XXX/gpio?pin=15&state=1"
 
 # Turn OFF GPIO 33
 curl "http://192.168.1.XXX/gpio?pin=33&state=0"
