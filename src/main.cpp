@@ -221,7 +221,15 @@ void handleNotFound() {
 void setup() {
     // Initialize serial communication
     Serial.begin(115200);
-    delay(100);
+
+    // Wait for USB Serial to be ready (ESP32-S3 USB CDC)
+    // This ensures serial output is visible in the monitor
+    delay(1000);
+
+    // Additional wait for serial connection (useful when opening serial monitor after boot)
+    while(!Serial && millis() < 5000) {
+        delay(10);
+    }
 
     Serial.println("\n\n=================================");
     Serial.println("ESP32-S3-MINI-1 GPIO Control");
