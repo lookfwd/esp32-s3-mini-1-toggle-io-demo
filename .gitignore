@@ -1,0 +1,35 @@
+# PlatformIO
+.pio/
+.vscode/
+.pioenvs/
+.piolibdeps/
+lib/
+bin/
+
+# Build artifacts
+*.o
+*.elf
+*.bin
+*.map
+
+# Configuration (contains WiFi credentials)
+src/config.h
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
