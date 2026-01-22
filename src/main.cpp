@@ -2,7 +2,7 @@
  * ESP32-S3-MINI-1 WiFi GPIO Control
  *
  * This program connects to WiFi and provides a web interface
- * to toggle GPIO pins IO14 and IO33
+ * to toggle GPIO pins IO15 and IO33
  */
 
 #include <WiFi.h>
@@ -10,14 +10,14 @@
 #include "config.h"
 
 // GPIO pins to control
-#define GPIO_PIN_14 14
+#define GPIO_PIN_15 15
 #define GPIO_PIN_33 33
 
 // Web server on port 80
 WebServer server(80);
 
 // GPIO states
-bool gpio14_state = false;
+bool gpio15_state = false;
 bool gpio33_state = false;
 
 // HTML page
@@ -109,10 +109,10 @@ const char* html_page = R"rawliteral(
         <h1>🔌 ESP32-S3 GPIO Control</h1>
 
         <div class="gpio-control">
-            <h2>GPIO 14</h2>
-            <p>Current State: <span class="status" id="status14">Loading...</span></p>
-            <button class="btn-on" onclick="toggleGPIO(14, true)">Turn ON</button>
-            <button class="btn-off" onclick="toggleGPIO(14, false)">Turn OFF</button>
+            <h2>GPIO 15</h2>
+            <p>Current State: <span class="status" id="status15">Loading...</span></p>
+            <button class="btn-on" onclick="toggleGPIO(15, true)">Turn ON</button>
+            <button class="btn-off" onclick="toggleGPIO(15, false)">Turn OFF</button>
         </div>
 
         <div class="gpio-control">
@@ -146,10 +146,10 @@ const char* html_page = R"rawliteral(
             fetch('/status')
                 .then(response => response.json())
                 .then(data => {
-                    // Update GPIO 14 status
-                    const status14 = document.getElementById('status14');
-                    status14.textContent = data.gpio14 ? 'ON' : 'OFF';
-                    status14.className = 'status ' + (data.gpio14 ? 'status-on' : 'status-off');
+                    // Update GPIO 15 status
+                    const status15 = document.getElementById('status15');
+                    status15.textContent = data.gpio15 ? 'ON' : 'OFF';
+                    status15.className = 'status ' + (data.gpio15 ? 'status-on' : 'status-off');
 
                     // Update GPIO 33 status
                     const status33 = document.getElementById('status33');
@@ -185,10 +185,10 @@ void handleGPIO() {
         int pin = server.arg("pin").toInt();
         int state = server.arg("state").toInt();
 
-        if (pin == GPIO_PIN_14) {
-            gpio14_state = (state == 1);
-            digitalWrite(GPIO_PIN_14, gpio14_state ? HIGH : LOW);
-            server.send(200, "application/json", "{\"success\":true,\"pin\":14,\"state\":" + String(gpio14_state) + "}");
+        if (pin == GPIO_PIN_15) {
+            gpio15_state = (state == 1);
+            digitalWrite(GPIO_PIN_15, gpio15_state ? HIGH : LOW);
+            server.send(200, "application/json", "{\"success\":true,\"pin\":15,\"state\":" + String(gpio15_state) + "}");
         } else if (pin == GPIO_PIN_33) {
             gpio33_state = (state == 1);
             digitalWrite(GPIO_PIN_33, gpio33_state ? HIGH : LOW);
@@ -203,7 +203,7 @@ void handleGPIO() {
 
 // Handle status request
 void handleStatus() {
-    String json = "{\"gpio14\":" + String(gpio14_state ? "true" : "false") +
+    String json = "{\"gpio15\":" + String(gpio15_state ? "true" : "false") +
                   ",\"gpio33\":" + String(gpio33_state ? "true" : "false") + "}";
     server.send(200, "application/json", json);
 }
@@ -222,12 +222,8 @@ void setup() {
     // Initialize serial communication
     Serial.begin(115200);
 
-    // Wait for USB Serial to be ready (ESP32-S3 USB CDC)
-    // This ensures serial output is visible in the monitor
-    delay(1000);
-
-    // Additional wait for serial connection (useful when opening serial monitor after boot)
-    while(!Serial && millis() < 5000) {
+    // Additional wait for serial connection
+    while (!Serial){
         delay(10);
     }
 
@@ -236,13 +232,13 @@ void setup() {
     Serial.println("=================================\n");
 
     // Initialize GPIO pins
-    pinMode(GPIO_PIN_14, OUTPUT);
+    pinMode(GPIO_PIN_15, OUTPUT);
     pinMode(GPIO_PIN_33, OUTPUT);
-    digitalWrite(GPIO_PIN_14, LOW);
+    digitalWrite(GPIO_PIN_15, LOW);
     digitalWrite(GPIO_PIN_33, LOW);
 
     Serial.println("GPIO pins initialized:");
-    Serial.println("  - GPIO 14: OUTPUT (OFF)");
+    Serial.println("  - GPIO 15: OUTPUT (OFF)");
     Serial.println("  - GPIO 33: OUTPUT (OFF)\n");
 
     // Connect to WiFi
